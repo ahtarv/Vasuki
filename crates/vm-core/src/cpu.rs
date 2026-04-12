@@ -1,4 +1,4 @@
-use crate::Memory;
+use crate::{Memory, Instruction};
 
 pub struct Cpu{ //how you declare structres in rust
     pub regs: [u64; 32], //array of 32 elements with unsigned 64 bit integer being the data type
@@ -24,7 +24,33 @@ impl Cpu{ //called the implementation block
     }
 
     pub fn step(&mut self, memory: &mut Memory){
-        let instruction = self.fetch(memory);
+        let inst_bits = self.fetch(memory);
+        let let Some(instruction) = Instruction::decode(inst_bits) {
+            self.execute(instruction);
+        }
         self.pc+=4;
+    }
+}
+
+fn execute(&mut self, instruction: Instruction) {
+    match instruction{
+        Instruction:: Add{rd, rs1, rs2} {
+            if rd!=0 {
+                self.regs[rd as usize] = self.regs[rs1 as usize]
+                        .wrapping_add(self.regs[rs2 as usize]);
+            }
+        }
+        Instruction:: Addi{rd, rs1, imm} => {
+            if rd!=0 {
+                self.regs[rd as usize] = self.regs[rs1 as usize]
+                    .wrapping_add(self.regs[imm as u64]);
+            }
+        }
+        Instruction:: Sub{ rd, rs1, rs2} => {
+            if rd!=0 {
+                self.regs[rd as usize] = self.regs[rs1 as usize]
+                    .wrapping_add(self.regs[rs2 as usize]);
+            }
+        }
     }
 }
