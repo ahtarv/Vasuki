@@ -1,1 +1,1 @@
-C:\Users\Lenovo\Desktop\Vasuki\target\debug\libvm_core.rlib: C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\cpu.rs C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\lib.rs C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\memory.rs
+C:\Users\Lenovo\Desktop\Vasuki\target\debug\libvm_core.rlib: C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\cpu.rs C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\instruction.rs C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\lib.rs C:\Users\Lenovo\Desktop\Vasuki\crates\vm-core\src\memory.rs

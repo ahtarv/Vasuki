@@ -25,31 +25,31 @@ impl Cpu{ //called the implementation block
 
     pub fn step(&mut self, memory: &mut Memory){
         let inst_bits = self.fetch(memory);
-        let let Some(instruction) = Instruction::decode(inst_bits) {
+        if let Some(instruction) = Instruction::decode(inst_bits) {
             self.execute(instruction);
         }
         self.pc+=4;
     }
-}
 
-fn execute(&mut self, instruction: Instruction) {
-    match instruction{
-        Instruction:: Add{rd, rs1, rs2} {
-            if rd!=0 {
-                self.regs[rd as usize] = self.regs[rs1 as usize]
-                        .wrapping_add(self.regs[rs2 as usize]);
+    fn execute(&mut self, instruction: Instruction) {
+        match instruction{
+            Instruction::Add{rd, rs1, rs2} => {
+                if rd!=0 {
+                    self.regs[rd as usize] = self.regs[rs1 as usize]
+                            .wrapping_add(self.regs[rs2 as usize]);
+                }
             }
-        }
-        Instruction:: Addi{rd, rs1, imm} => {
-            if rd!=0 {
-                self.regs[rd as usize] = self.regs[rs1 as usize]
-                    .wrapping_add(self.regs[imm as u64]);
+            Instruction::Addi{rd, rs1, imm} => {
+                if rd!=0 {
+                    self.regs[rd as usize] = self.regs[rs1 as usize]
+                        .wrapping_add(imm as u64);
+                }
             }
-        }
-        Instruction:: Sub{ rd, rs1, rs2} => {
-            if rd!=0 {
-                self.regs[rd as usize] = self.regs[rs1 as usize]
-                    .wrapping_add(self.regs[rs2 as usize]);
+            Instruction::Sub{rd, rs1, rs2} => {
+                if rd!=0 {
+                    self.regs[rd as usize] = self.regs[rs1 as usize]
+                        .wrapping_sub(self.regs[rs2 as usize]);
+                }
             }
         }
     }
