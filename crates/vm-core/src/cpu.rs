@@ -4,10 +4,10 @@ pub struct Cpu{ //how you declare structres in rust
 }
 
 impl Cpu{ //called the implementation block
-    pub func new()-> Self{ //here is the constructor, something that called immediately when the impl is called
+    pub fn new()-> Self{ //here is the constructor, something that called immediately when the impl is called
         Self{
-            regs: [0,32]; //initilizes a 32 bit array with allow of them as zeros
-            pc:0;// program counter set to zero
+            regs: [0;32], //initilizes a 32 bit array with allow of them as zeros
+            pc:0,// program counter set to zero
             //note the last expression in rust is automatically retuurned, no need for return keyword
         }
     }
