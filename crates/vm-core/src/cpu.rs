@@ -54,3 +54,38 @@ impl Cpu{ //called the implementation block
         }
     }
 }
+
+#[cfg(test)]
+
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test_addi(){
+        let mut cpu = Cpu::new();
+        let mut mem =  Memory::new(1024);
+
+        let instruction: u32 = (42 << 20) | (0 << 15) | (0 << 12) | (5 << 7) | 0x13;
+        mem.write_u32(0, instruction);
+
+        cpu.step(&mut mem);
+
+        assert_eq!(cpu.regs[5], 42);
+        assert_eq!(cpu.pc, 4);
+    }
+
+    #[test]
+    fn test_add(){
+        let mut cpu = Cpu::new();
+        let mut mem = Memory::new(1024);
+
+        cpu.regs[1] = 10;
+        cpu.regs[2] = 20;
+
+        let instruction: u32 = (0<<25) | (2<<20) | (1<<15) | (0<<12) | (3<<7) | 0x33;
+        mem.write_u32(0, instruction);
+
+        cpu.step(&mut mem);
+        assert_eq!(cpu.regs[3], 30);
+    }
+}
