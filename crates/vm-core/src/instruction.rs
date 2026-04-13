@@ -3,6 +3,15 @@ pub enum Instruction {
     Add { rd: u8, rs1: u8, rs2: u8 }, //add two registers, rd = r1+rs2
     Addi { rd: u8, rs1: u8, imm: i64 }, //addi add immediate, rd=rs1 + imm
     Sub { rd: u8, rs1: u8, rs2: u8 }, // subtract
+
+    Ld {rd: u8, rs1: u8, offset: i64}, //reading data from memory into a register. rd=5 is the destination register, rs1 is the base address register and offset = 8 offset from base address, there are three kind load double word
+    Lw {rd: u8, rs1: u8, offset: i64},//load word (32bits)
+    Lb{rd: u8, rs1: u8, offset: i64},//load byte(8bbits)
+
+    Sd {rs1: u8, rs2: u8, offset: i64}, //here we are writing register into meomry. rs2 is the source register, rs1 is the base adress register and offset=8 is offset from base address
+    Sw{rs1: u8, rs2: u8, offset: i64},
+    Sb{rs1: u8, rs2: u8, offset: i64},//offset allows you to access arraays and structs efficiently 
+    //most cpus access memory using base+offset
 }
 
 impl Instruction {
