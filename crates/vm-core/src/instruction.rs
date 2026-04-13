@@ -44,6 +44,41 @@ impl Instruction {
                 
                 Some(Instruction::Addi { rd, rs1, imm })
             }
+            0x03 => {
+                let rd = ((inst >> 7) & 0x1F) as u8;
+                let rs1 = ((inst >> 15) & 0x1F) as u8;
+                let offset = ((inst as i32) >> 20) as i64;
+                let funct3 = (inst >> 12) & 0x7; //the who
+                
+                match funct3{
+                    0x0 => Some(Instruction::Lb{rd, rs1, offset}), //lb is for load byte
+                    0x3 => Some(Instruction::Ld {rd, rs1, offset}),// lw is for load word
+                    0x2=> Some(Instruction::Lw{rd, rs1, offset}), //ld is for load double word
+                    _ => None,
+
+                    //if example ld is called, load 64 bits from memeory address x10 + 16 into x5
+                }
+            }
+            0x23 => {
+                let rs1 = ((inst >> 15) & 0x1F) as u8;
+                let rs2 = ((inst >> 20) & 0x1F) as u8;
+                let funct3 = (inst >> 12) & 0x7;
+                //the s type instructions have a weird layout because they dont have a destination register, the immeidate split is in two pieces: //
+                //[31:25]  [24:20] [19:15] [14:12] [11:7]  [6:0]
+//                imm[11:5]  rs2    rs1    funct3  imm[4:0] opcode
+                //this was done cause they wanted to keep rs1 and rs2 in same position across all position types for simpler decoding.
+                let imm_11_5 = (inst >> 25) & 0x7F;
+                let imm_4_0 = (inst >> 7) & 0x1F;
+                let offset = (((imm_11_5 << 5) | imm_4_0) as i32) << 20 >> 20;
+                let offset = offset as i64;
+                //here we reconstruct the offset so that the values are read properly
+                match funct3 {
+                    0x0 => Some(Instruction::Sb{rs1, rs2, offset}),//store byte
+                    0x3 => Some(Instruction::Sd {rs1, rs2, offset}),//store word
+                    0x2=> Some(Instruction::Sw{rs1, rs2, offset}),//store double word 
+                    _ => None,
+                }
+            }
             _ => None,
         }
     }
