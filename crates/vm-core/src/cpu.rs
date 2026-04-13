@@ -26,12 +26,12 @@ impl Cpu{ //called the implementation block
     pub fn step(&mut self, memory: &mut Memory){
         let inst_bits = self.fetch(memory);
         if let Some(instruction) = Instruction::decode(inst_bits) {
-            self.execute(instruction);
+            self.execute(instruction, memory);
         }
         self.pc+=4;
     }
-
-    fn execute(&mut self, instruction: Instruction) {
+    //we added memory later after we added lb ld sb cause add and sub dont need memory they work on registers where load and store need memory to save to RAM
+    fn execute(&mut self, instruction: Instruction, memory: &mut Memory) {
         match instruction{
             Instruction::Add{rd, rs1, rs2} => {
                 if rd!=0 {

@@ -32,6 +32,34 @@ impl Memory{
         self.ram[addr+2] = bytes[2];
         self.ram[addr+3] = bytes[3];
     }
+    pub fn write_u64(&self, addr: u64) -> u64 {
+        let addr = addr as usize;
+        let bytes = value.to_le_bytes();
+        u64::from_le_bytes([
+        self.ram[addr] = bytes[0];
+        self.ram[addr+1] = bytes[1];
+        self.ram[addr+2] = bytes[2];
+        self.ram[addr+3] = bytes[3];self.ram[addr] = bytes[0];
+        self.ram[addr+4] = bytes[4];
+        self.ram[addr+5] = bytes[5];
+        self.ram[addr+6] = bytes[6];
+        self.ram[addr+7] = bytes[7];
+
+        ])
+    }
+    pub fn read_u64(&self, addr: u64) -> u64{
+        let addr = addr as usize; //convert once and reuse,
+        u64::from_le_bytes([ //converts 4 bytes into a 32-bit integer using little endian(least significant byte) byte order.
+            self.ram[addr],
+            self.ram[addr+1],
+            self.ram[addr+2],
+            self.ram[addr+3],
+            self.ram[addr+4],
+            self.ram[addr+5],
+            self.ram[addr+6],
+            self.ram[addr+7],
+        ])
+    }
 }
 
 #[cfg(test)]
